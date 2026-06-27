@@ -22,6 +22,47 @@ body {
   background-color: var(--background-color);
 }
 
+/* ==header background== */
+
+ header
+{
+    width: 100vw;
+    height: 100vh;
+    background-image: url(background.jpg);
+    background-position:bottom;
+    background-size: cover;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+.header-content {
+    margin-bottom: 150px;
+    color: var(--text-color1);
+    text-align: center;
+}
+.header-content h2 {
+    font-size: 8vmin;
+}
+.line{
+    width: 400px;
+    height: 4px;
+    background:var(--secondary-color);
+    margin: 10px auto;
+    border-radius: 5px;
+}
+.header-content h1{
+    font-size: 7vmin;
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+.ctn {
+    padding: 5px 15px;
+    background: var(--secondary-color);
+    border-radius: 30px;
+    color: whitesmoke;
+    text-decoration: none;
+}
+
 /*== navbar ==*/
 
 nav{
@@ -139,13 +180,14 @@ transform: rotate(180deg);
     transition: 0.2s;
     display: inline-block;
 }
+
 /* ===for mobile menu=== */
 
-
-/* ===mobilemenu=== */
+/* ===mobilemenu na code pero di pa ayos
 
 @media screen and (max-width: 768px) {
  .navlist{
+    display: flex;
     position: absolute;
     top: 100%;
     flex-direction: column;
@@ -155,437 +197,62 @@ transform: rotate(180deg);
     width: 100%;
     right: 0;
     padding: 50px 0px;
-    z-index: 1000;
     transition: 500ms;
-    height: max-content; 
-    overflow-y: visible;
  }
- /*==
+
+ === */
+
+ /* ===mobilemenu na code na may ai pero di pa rin ayos === */
+ @media screen and (max-width: 768px) {
+  
+  .navlist {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: 100%;
+    background-color: var(--background-color);
+    width: 100%;;
+    right: 0;
+    gap: 20px; 
+    padding: 0;
+    height: 100vh;
+    color: var(--text-color);
+    list-style: none;
+  }
+
  input:checked ~ .navlist{
     height: 100vh;
     padding: 50px 0px;
  }
-    ==*/
-
-Conversation with Gemini
-how to fix the drop down in mobile view it appears behind the back do you need the media query code?
-
-Yes, seeing your current HTML and media query CSS would definitely help pinpoint the exact classes, but this is a classic CSS stacking context issue.
-
-When a dropdown menu opens but falls behind the section or background below it, it's almost always because of a missing or low z-index.
-
-Here is how you can quickly fix it:
-
-1. The Quick CSS Fix
-To force the dropdown to sit on top of everything else, you need to apply a positioning style and a high z-index to either the dropdown menu itself or the entire header/navigation container inside your mobile media query.
-
-Try adding this to your CSS:
-
-CSS
-/* Replace .your-dropdown-menu with your actual class name */
-.your-dropdown-menu {
-    position: absolute; /* or relative, depending on your setup */
-    z-index: 9999;      /* Forces it to the very top layer */
-}
-2. Check the Parent Container (Crucial)
-If adding z-index to the dropdown doesn't work, it's usually because its parent container (like the <nav> or <header>) doesn't have a stacking context.
-
-Try applying the z-index to the header element instead:
-
-CSS
-header, nav {
-    position: relative; 
-    z-index: 100; /* Makes sure the entire navigation bar sits above the main content */
-}
-Want a precise snippet?
-If you'd like me to tell you exactly what to copy and paste, reply with:
-
-The HTML snippet of this menu structure.
-
-Your current CSS / Media Query code for the mobile view.
-
-@media screen and (max-width: 768px) {
-
- .navlist{
-
-    position: absolute;
-
-    top: 100%;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    gap: 50px;
-
-    background-color: var(--background-color);
-
+ .navlist > li {
     width: 100%;
-
-    right: 0;
-
-    padding: 50px 0px;
-
-    height: auto;
-
-    transition: 500ms;
-
- }
-
-That media query code explains exactly what's happening! Because .navlist has position: absolute and its container doesn't have a defined layer stack, it is sliding underneath the sections below it.
-
-To fix this, you just need to add z-index to .navlist so it stacks on top of your main page content.
-
-The Fix
-Update your media query code by adding z-index: 1000; (or any high number) to .navlist like this:
-
-CSS
-@media screen and (max-width: 768px) {
-  .navlist {
-    position: absolute;
-    top: 100%;
-    flex-direction: column;
-    align-items: center;
-    gap: 50px;
-    background-color: var(--background-color);
-    width: 100%;
-    right: 0;
-    padding: 50px 0px;
-    height: auto;
-    transition: 500ms;
-    
-    /* ADD THIS LINE */
-    z-index: 1000; 
-  }
-}
-Still not coming to the front?
-If you add that and it still hides behind the content below it, the issue lies with its parent element (likely your <header> or <nav> tag).
-
-You'll need to make sure the header itself sits on a higher layer than your main website sections. Outside or inside your media query, ensure your header looks something like this:
-
-CSS
-header {
-  position: relative; /* or fixed/sticky depending on your layout */
-  z-index: 1000;      /* Ensures the whole header container stays on top */
-}
-<ul class="navlist">
-
-                    <li><a href="#">Home</a></li>
-
-                    <li><a href="#">School Perfomance</a></li>
-
-                    <li><a href="#">Projects & Activities</a>
-
-                    <i class="fa-solid fa-angle-down arrow"></i>
-
-                    </li>
-
-                    <li><a href="#">Issuances</a>
-
-                    <i class="fa-solid fa-angle-down arrow"></i>
-
-                    <ul class="dropdown">
-
-                        <li><a href="#">Issuance 2027</a></li>
-
-                        <li><a href="#">Issuance 2026</a></li>
-
-                        <li><a href="#">Issuance 2025</a></li>
-
-                        <li><a href="#">Issuance 2024</a></li>
-
-                        <li><a href="#">Issuance 2023</a></li>
-
-                    </ul></li>
-
-                    <li><a href="#">Transparency</a></li>
-
-                    <li><a href="#">School Profile</a></li>
-
-                </ul>
-
-            </div>
-
-Ah, seeing the HTML makes it crystal clear!
-
-The screenshots you shared show "Transparency" and "School Profile" rendering right on top of the open "Issuances" dropdown.
-
-Because your .navlist elements are ordered vertically in mobile view, the list items (<li>) that come after "Issuances" are naturally stacking on top of the .dropdown submenu.
-
-Here is the exact CSS you need to add to your mobile media query to fix this layout stacking order:
-
-The Complete Solution
-Update your media query to include a relative position and a z-index for the <li> wrapper, and make sure the .dropdown pushes everything down or pops over them cleanly.
-
-Add these rules inside your @media screen and (max-width: 768px) block:
-
-CSS
-@media screen and (max-width: 768px) {
-  /* Your existing navlist styles */
-  .navlist {
-    position: absolute;
-    top: 100%;
-    flex-direction: column;
-    align-items: center;
-    gap: 50px;
-    background-color: var(--background-color);
-    width: 100%;
-    right: 0;
-    padding: 50px 0px;
-    height: auto;
-    transition: 500ms;
-    z-index: 1000; /* Keeps the main mobile menu on top of the page body */
-  }
-
-  /* 1. FIX: Ensure the list item containing the dropdown manages its stack */
-  .navlist > li {
+    text-align: center;
     position: relative;
-    width: 100%; /* Optional: centers the click targets nicely on mobile */
-    text-align: center;
   }
 
-  /* 2. FIX: Force the actual sub-menu to sit above subsequent list items */
   .navlist .dropdown {
-    position: absolute; 
-    left: 50%;
-    transform: translateX(-50%); /* Centers the dropdown under the link */
-    background-color: var(--background-color); /* Match your menu background */
-    width: 200px; /* Adjust width as needed */
-    z-index: 2000; /* Higher than .navlist to sit completely on top */
-    
-    /* Make sure it's hidden by default, shown when active/hovered */
-    /* e.g., display: none; or visibility: hidden; based on your JS toggle */
-  }
-}
-Why this works:
-position: relative on the li: This creates a mini stacking anchor for each individual menu item.
-
-z-index: 2000 on .dropdown: By explicitly giving the nested .dropdown a massive z-index, it overrides the natural source-order behavior that was letting "Transparency" and "School Profile" clip right over it.
-
-it appear like this
-
-That overlapping text happens because .dropdown is set to position: absolute. In CSS, absolute positioning removes an element from the normal layout flow, meaning the items below it ("Transparency" and "School Profile") have no idea the dropdown is there and don't move out of the way.
-
-For mobile layouts, the best practice is to make the dropdown push the other menu items down dynamically.
-
-Here is how to fix it:
-
-The Fix: Switch to position: relative (or static) on Mobile
-Inside your mobile media query (@media screen and (max-width: 768px)), change the dropdown's position so it takes up actual space in the layout:
-
-CSS
-@media screen and (max-width: 768px) {
-
-  /* Target the dropdown menu inside your mobile query */
-  .navlist .dropdown {
-    position: relative;    /* CHANGED from absolute to relative */
-    top: 0;               /* Reset top alignment */
-    left: 0;              /* Reset left alignment */
-    transform: none;      /* Remove any centering transforms */
-    width: 100%;          /* Make it stretch full width inside the menu */
-    box-shadow: none;     /* Optional: remove shadows that don't make sense anymore */
-    
-    /* Add a little padding or gap so the sub-items look nested */
-    padding-top: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;            /* Spaces out the sub-items neatly */
-  }
-
-  /* Optional: Adjust the main navlist gap if things feel too spaced out now */
-  .navlist {
-    gap: 30px;            /* Tweak this number to your liking */
-  }
-}
-Why this solves it:
-By switching from absolute to relative (or removing positioning entirely) on mobile, the dropdown items now occupy physical space. When the "Issuances" dropdown opens, it will naturally push "Transparency" and "School Profile" further down the screen, completely preventing any overlapping text.
-
-do i need to add that or replace the other one you sent
-
-You should replace the .navlist .dropdown code I sent you in the previous step with this new one.
-
-To make it completely seamless, here is exactly how your entire @media screen and (max-width: 768px) block should look. You can copy and paste this over your current mobile media query:
-
-CSS
-@media screen and (max-width: 768px) {
-  .navlist {
-    position: absolute;
-    top: 100%;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px; /* Reduced gap slightly so the layout looks tight and clean */
-    background-color: var(--background-color);
-    width: 100%;
-    right: 0;
-    padding: 50px 0px;
-    height: auto;
-    transition: 500ms;
-    z-index: 1000; /* Keeps the main mobile menu on top of the webpage */
-  }
-
-  /* This forces the dropdown to push items down instead of floating over them */
-  .navlist .dropdown {
-    position: relative;    /* Forces it into the normal layout flow */
-    width: 100%;
-    text-align: center;
-    padding-top: 20px;     /* Gives some breathing room below the "Issuances" text */
-    display: flex;
-    flex-direction: column;
-    gap: 20px;             /* Spaces out the sub-items (Issuance 2027, 2026, etc.) */
-    
-    /* Reset any desktop absolute positioning properties */
+    display: none;    
+    position: relative; 
     top: 0;
     left: 0;
-    transform: none;
-    box-shadow: none;
-  }
-}
-What this changes:
-It completely removes the position: absolute; from the dropdown on mobile screens, which is what was causing the text to clash and overlap.
-
-It uses flex-direction: column on the sub-menu so your issuance years stack vertically and push "Transparency" safely out of the way.
-
-it works but this happen the other part of nav list is missing and not align
-
-This happens because .navlist has align-items: center applied to it, while the .dropdown sub-items are stretching or shifting to the right. Additionally, because the dropdown is now quite tall, it is likely overflowing your mobile menu wrapper (.navlist), cutting off "Transparency" and "School Profile" at the bottom.
-
-Here is how to get everything perfectly centered, aligned, and visible:
-
-The Updated CSS Fix
-Replace the code inside your media query with this version:
-
-CSS
-@media screen and (max-width: 768px) {
-  .navlist {
-    position: absolute;
-    top: 100%;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px; 
-    background-color: var(--background-color);
     width: 100%;
-    right: 0;
-    padding: 50px 0px;
-    
-    /* FIX 1: Allow the mobile menu to expand dynamically so items aren't cut off */
-    height: max-content; 
-    overflow-y: visible;
+    padding: 10px 0 ;
+    list-style: none;
   }
-
-  /* FIX 2: Ensure the parent list items take up full width to properly center text */
-  .navlist > li {
-    width: 100%;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* FIX 3: Reset padding and force dropdown items to align perfectly in the middle */
-  .navlist .dropdown {
-    position: relative;    
-    width: 100%;
-    padding: 20px 0 0 0; /* Clear out any left/right desktop padding values */
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centers "Issuance 2027", etc. right under "Issuances" */
-    gap: 20px;             
-    
-    /* Desktop resets */
-    top: 0;
-    left: 0;
-    transform: none;
-    box-shadow: none;
-  }
-
-  /* Optional: Ensure the links inside the dropdown are centered too */
   .navlist .dropdown li {
-    width: 100%;
-    text-align: center;
+    margin: 10px 0; 
+    overflow: visible;
   }
-}
-Why this fixes the alignment and missing items:
-height: max-content: If your .navlist has a fixed height set somewhere else in the code, the long dropdown list forces elements outside its bounds, causing them to disappear. This rule lets the background stretch safely as long as needed.
-
-align-items: center on .dropdown: This explicitly forces the sub-items ("Issuance 2027", etc.) to follow the exact same vertical center line as the main links, cleaning up that awkward right-side shift.
-
-now it appeared like this
-
-The alignment broke because the green border lines/list items are now stretching across the entire width, while your text inside is being pushed left.
-
-To make everything look cohesive, we need to enforce centering across all children elements (a, i, and the ul) and reset any default browser paddings on the ul and li tags.
-
-The Clean, Final Fix
-Replace your mobile media query styles with this updated, rock-solid layout code:
-
-CSS
-@media screen and (max-width: 768px) {
-  .navlist {
-    position: absolute;
-    top: 100%;
-    flex-direction: column;
+  .navlist .dropdown ul li{
+    margin: 10px 0; 
+    color: #000000;
     align-items: center;
-    gap: 30px; 
-    background-color: var(--background-color);
-    width: 100%;
-    right: 0;
-    padding: 50px 0px;
-    height: max-content; 
-    overflow-y: visible;
   }
-
-  /* Force the main menu items to perfectly center all contents vertically */
-  .navlist > li {
-    width: 100%;
-    display: flex;
+  .navlist li.is-open .dropdown {
+    display: block; 
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
   }
-
-  /* Make sure links and icon arrows wrap or stack neatly without throwing off center alignment */
-  .navlist > li > a {
-    display: inline-block;
-    text-align: center;
-    width: 100%;
-  }
-
-  /* FIX: Reset dropdown padding, list styling, and force true center alignment */
-  .navlist .dropdown {
-    position: relative;    
-    width: 100%;
-    padding: 20px 0 0 0; /* Clears hidden left paddings browsers add by default */
-    margin: 0;
-    list-style: none;    /* Removes any default list dots pushing items right */
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centers text and lines exactly in the middle */
-    gap: 20px;             
-    
-    /* Reset desktop values */
-    top: 0;
-    left: 0;
-    transform: none;
-    box-shadow: none;
-  }
-
-  /* Target the sub-menu list items directly */
-  .navlist .dropdown li {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-  }
-
-  .navlist .dropdown li a {
-    width: 100%;
-    text-align: center;
-  }
-}
 }
 
  /* ===login button=== */
@@ -617,46 +284,7 @@ CSS
     box-shadow: var(--button-highlight);
  }
 
- /* ==header== */
-
- header
-{
-    width: 100vw;
-    height: 100vh;
-    background-image: url(background.jpg);
-    background-position:bottom;
-    background-size: cover;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-}
-.header-content {
-    margin-bottom: 150px;
-    color: var(--text-color1);
-    text-align: center;
-}
-.header-content h2 {
-    font-size: 8vmin;
-}
-.line{
-    width: 400px;
-    height: 4px;
-    background:var(--secondary-color);
-    margin: 10px auto;
-    border-radius: 5px;
-}
-.header-content h1{
-    font-size: 7vmin;
-    margin-top: 50px;
-    margin-bottom: 30px;
-}
-.ctn {
-    padding: 5px 15px;
-    background: var(--secondary-color);
-    border-radius: 30px;
-    color: whitesmoke;
-    text-decoration: none;
-}
+ 
 
 /* News Layout Grid */
 .news-section {
@@ -855,6 +483,135 @@ CSS
     padding: 20px;
     text-align: center;
     color: var(--text-color1);
+}
+
+/* email page */
+
+.email-container{
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.email{
+    background-color: rgba(186, 194, 186, 0.468);
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 20px;
+    border: 2px solid var(--primary-color);
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 20px;
+}
+.email-form{
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    margin-left: 30px;
+}
+.email-contact{
+    display: flex;
+    width: 300px;
+    height: 30px;
+    border: none;
+    outline: none;
+    padding-left: 20px;
+    font-weight: 400;
+    color: #202124;
+    border-radius: 15px;
+}
+.email textarea{
+    height: 130px;
+    padding-top: 10px;
+    border-radius: 15px;
+}
+.email-contact:focus{
+    border: 1px solid var(--primary-color);
+}
+.submit{
+    display: flex;
+    align-items: center;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--secondary-color);
+    color: var(--text-color1);
+    font-size: 16px;
+    gap: 10px;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: 0;
+}
+.submit:hover{
+    background: var(--primary-color);
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+.email-container {
+    padding: 20px;
+    height: auto;
+    min-height: 100vh;
+}
+.email {
+    width: 100%;
+    max-width: none;
+    padding: 20px;
+}
+.email-contact,
+.email textarea {
+    width: 100%;
+    }
+.submit {
+    width: 100%;
+    justify-content: center;
+}
+.email-form {
+    width: 100%;
+    margin: 0;
+    text-align: center;
+    }
+}
+
+
+/* ===for contact page=== */
+
+.contact-number{
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+.contact {
+  border: 2px solid var(--primary-color);
+  background-color: rgba(186, 194, 186, 0.468);
+  padding: 20px;
+  height: 200px;
+  width: 100%;
+  max-width: 320px;   
+  border-radius: 5px;
+}
+.contact-header h3 {
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+.information {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.phone {
+  font-size: 18px;
+}
+.contact p {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-color);
 }
 
 /* Animations */
