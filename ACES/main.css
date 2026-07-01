@@ -21,6 +21,16 @@ body {
   height: 100vh;
   background-color: var(--background-color);
 }
+html, body{
+    scrollbar-width: none;
+
+    -ms-overflow-style: none;
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar{
+    display: none;
+}
+
 
 /* ==header background== */
 
@@ -183,7 +193,7 @@ transform: rotate(180deg);
 
 /* ===for mobile menu=== */
 
-/* ===mobilemenu na code pero di pa ayos
+/* ===mobilemenu na code pero di pa ayos === */
 
 @media screen and (max-width: 768px) {
  .navlist{
@@ -191,18 +201,41 @@ transform: rotate(180deg);
     position: absolute;
     top: 100%;
     flex-direction: column;
-    align-items: center;
-    gap: 50px;
+    align-items: start;
+    gap: 30px;
     background-color: var(--background-color);
     width: 100%;
     right: 0;
     padding: 50px 0px;
     transition: 500ms;
  }
+ .navlist .dropdown {
+    position: relative; 
+    display: none;    
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 0;
+  }
+  .navlist .dropdown li {
+    margin: 10px 0; 
+    overflow: visible;
+  }
+  .navlist .dropdown ul li{
+    margin: 10px 0; 
+    color: #000000;
+    align-items: center;
+  }
+  .navlist li.is-open .dropdown {
+    display: block; 
+    flex-direction: column;
+  }
+}
 
- === */
 
- /* ===mobilemenu na code na may ai pero di pa rin ayos === */
+
+
+ /* ===mobilemenu na code na may ai pero di pa rin ayos 
  @media screen and (max-width: 768px) {
   
   .navlist {
@@ -254,6 +287,10 @@ transform: rotate(180deg);
     flex-direction: column;
   }
 }
+
+=== */
+
+
 
  /* ===login button=== */
 
@@ -485,7 +522,7 @@ transform: rotate(180deg);
     color: var(--text-color1);
 }
 
-/* email page */
+/* email */
 
 .email-container{
     display: flex;
@@ -577,7 +614,6 @@ transform: rotate(180deg);
 
 
 /* ===for contact page=== */
-
 .contact-number{
   margin: 0;
   display: flex;
@@ -604,9 +640,10 @@ transform: rotate(180deg);
   justify-content: center;
   gap: 8px;
   margin-bottom: 10px;
+  font-size: 14px;
 }
 .phone {
-  font-size: 18px;
+  font-size: 14px;
 }
 .contact p {
   text-align: center;
